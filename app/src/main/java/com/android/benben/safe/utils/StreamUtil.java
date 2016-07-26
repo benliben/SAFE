@@ -6,12 +6,10 @@ import java.io.InputStream;
 
 /**
  * Created by LiYuanxiong on 2016/7/25 16:00.
- * Desribe:
+ * Desribe: 将流转换成字符串
  */
 public class StreamUtil {
-
     /**
-     *
      * @param is  流的对象
      * @return  流转换成的字符串  返回null代表异常
      */

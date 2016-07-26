@@ -12,7 +12,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.benben.safe.R;
@@ -37,166 +36,133 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 /**
- * Created by LiYuanxiong on 2016/7/25 14:22.
+ * Created by LiYuanxiong on 2016/7/26 15:51.
  * Desribe:
  */
-public class SplashActivity extends BaseActivity {
+public class SplashActivityTest extends BaseActivity {
+    private static final int UPDATE_VERSION = 1;//更新
+    private static final int ENTER_HOME = 2;//进入主界面
+    private static final int URL_ERROR = 3;//url异常
+    private static final int IO_ERROR = 4;//io异常
+    private static final int JSON_ERROR = 5;//json异常
     private static final String TAG = "lyx";
-    private static final int UPDATE_VERSION = 100;//更新
-    private static final int ENTER_HOME = 200;//进入主界面
-    private static final int URL_ERROR = 300;//URL出错
-    private static final int IO_ERROR = 400;//IO数据读取出错
-    private static final int JSON_ERROR = 500;//URL出错
     @InjectView(R.id.tv_version_name)
-    TextView mVersionName;
-
+    TextView mName;
     private int mVersionCode;
-    private String mVersionDes;
-    private String mDownloadUrl;
 
-    private Handler mHandler = new Handler() {
+    private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            Log.i(TAG, "handleMessage: " + msg.what);
+            super.handleMessage(msg);
             switch (msg.what) {
                 case UPDATE_VERSION:
-                    /* 弹出对话框 提示用户更新*/
+                    /*弹出对话框 提示用户是否更新*/
                     showUpdateDialog();
                     break;
                 case ENTER_HOME:
-                    /*进入应用程序*/
+                    /*直接进入主界面*/
                     enterHome();
                     break;
                 case URL_ERROR:
-                    ToastUrl.show(getApplicationContext(), "url异常");
+                    /*提示然后进入主界面*/
+                    ToastUrl.show(getApplicationContext(),"URL");
                     enterHome();
                     break;
                 case IO_ERROR:
-                    ToastUrl.show(getApplicationContext(), "读取异常");
+                    ToastUrl.show(getApplicationContext(),"IO");
                     enterHome();
                     break;
                 case JSON_ERROR:
-                    ToastUrl.show(getApplicationContext(), "JSON解析异常");
+                    ToastUrl.show(getApplicationContext(),"JSON");
                     enterHome();
                     break;
             }
         }
     };
+    private String versionDes;
+    private String downloadUrl;
 
-    /**
-     * 创建布局
-     *
-     * @param savedInstanceState
-     */
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        ButterKnife.inject(this);
-        /*获取数据*/
-        initData();
+    /*进入主界面*/
+    private void enterHome() {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
-
-    /**
-     * 弹出对话框 提示用户更新
-     */
+    /*弹出对话框 提示用户更新*/
     private void showUpdateDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setIcon(R.mipmap.ic_launcher);//
-        builder.setTitle("版本更新");//
-        builder.setMessage(mVersionDes);//
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setTitle("版本更新");
+        builder.setMessage(versionDes);
         builder.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                /*下载apk */
+                /*下载apk*/
                 downloadApk();
             }
         });
         builder.setNegativeButton("稍后再说", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                /*取消对话框*/
+                /*取消对话框 然后直接进入主界面*/
                 enterHome();
+
             }
         });
-        /*点击取消的事件监听*/
+        /*监听break返回键*/
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                /*即使用户点击取消也可以主界面*/
                 enterHome();
                 dialog.dismiss();
             }
         });
+
         builder.show();
     }
 
-    /**
-     * apk下载链接地址  放置apk的所在路径
-     */
+    /*下载apk*/
     private void downloadApk() {
-        /*1.判断sd卡是否可用*/
+        /*1.先判断sd卡是否可用*/
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            /*2.获取sd路径*/
+            /*2.获取sd卡的路径*/
             String path = Environment.getExternalStorageDirectory().getAbsolutePath() +
-                    File.separator + "mobilesafe74.apk";
-            /*3.发送请求，获取apk 并且放置到指定路径*/
+                    File.separator + "safe.apk";
+            /*3.发送请求 获取apk并且放置到指定路径*/
             HttpUtils httpUtils = new HttpUtils();
-            /*4.发送请求，传递参数（下载地址，下载引用放置的位置，）*/
-            httpUtils.download(mDownloadUrl, path, new RequestCallBack<File>() {
-                /**
-                 * 下载成功
-                 * @param responseInfo
-                 */
+            /*4.发送请求，传递参数（下载地址，下载应用放置的位置*/
+            httpUtils.download(downloadUrl, path, new RequestCallBack<File>() {
+                /*下载成功*/
                 @Override
                 public void onSuccess(ResponseInfo<File> responseInfo) {
-                    /*下载过后的放置在sd卡的位置*/
-                    Log.i(TAG, "下载成功");
                     File file = responseInfo.result;
                     /*提示安装*/
                     installApk(file);
                 }
-
-                /**
-                 * 下载失败
-                 * @param e
-                 * @param s
-                 */
+                /*下载失败*/
                 @Override
                 public void onFailure(HttpException e, String s) {
                     Log.i(TAG, "下载失败");
                 }
 
-                /**
-                 * 刚刚开始下载的方法
-                 */
                 @Override
                 public void onStart() {
-                    Log.i(TAG, "刚刚开始下载");
+                    Log.i(TAG, "刚开始下载");
                     super.onStart();
                 }
 
-                /**
-                 *下载过程中的方法
-                 * @param total 总数
-                 * @param current 当前的
-                 * @param isUploading 是否正在下载
-                 */
                 @Override
                 public void onLoading(long total, long current, boolean isUploading) {
-                    Log.i(TAG, "下载过程中");
+                    Log.i(TAG, "下载中");
                     super.onLoading(total, current, isUploading);
                 }
             });
+
+
         }
     }
 
-
-    /**
-     * 安装对应的apk
-     * @param file 安装的文件
-     */
+    /*提示安装apk*/
     private void installApk(File file) {
         /*系统应用界面*/
         Intent intent = new Intent("android.intent.action.VIEW");
@@ -206,105 +172,89 @@ public class SplashActivity extends BaseActivity {
         /*设置安装的类型*/
         intent.setType("application/vnd.android.package-archive");
         startActivityForResult(intent, 0);
+
     }
 
-    /**
-     * 开启一个activity后 返回结果调用的方法
-     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         enterHome();
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    /**
-     * 进入应用程序的主界面
-     */
-    private void enterHome() {
-        startActivity(new Intent(this, MainActivity.class));
-        /*在开启一个新的界面后 将导航页面关闭*/
-        finish();
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
+        ButterKnife.inject(this);
+        /*获取数据*/
+        initData();
     }
 
-    /**
-     * 获取数据方法
-     */
     private void initData() {
         /*1.获取版本名称*/
-        mVersionName.setText("版本名称:" + getVersionName());
-        /*2.检查是否有更新（用现有的版本号与服务器做对比） 如果是有更新就提示用户更新(member)*/
+        mName.setText("版本名称" + getVersionName());
+        /*2.获取本地版本号检查是否有更新（用本地的版本号与服务器的版本号做对比）*/
         mVersionCode = getVersionCode();
-        /*3.获取服务器的版本号（客户端发请求，服务端给相应（json，xml））*/
-        //http://www.oxxx.com/SAFE.json?key=value  返回200请求成功，流的方式将数据读取下来
-        /**
-         * json中内容包括
-         * 更新版本的版本名称
-         * 新版本的描述信息
-         * 服务端版本号
-         * 新版本apk下载地址
-         */
+        /*3.获取服务器的版本号*/
         checkVersion();
+
     }
 
     /**
-     * 检查版本号
+     * 检查服务端的版本号
      */
     private void checkVersion() {
+        /*由于是联网的耗时操作所有要放在子线程中进行*/
         new Thread(new Runnable() {
             @Override
             public void run() {
-                /*发送请求获取数据*/
+                /*发送请求 获取数据*/
                 Message message = Message.obtain();
-                long startTime = System.currentTimeMillis();
-//                try {
-                   /*1.封装url地址*/
-                URL url = null;
+                long startTime = System.currentTimeMillis();//获取链接开始的时间
                 try {
+                    /*1.封装url地址*/
+                    URL url = null;
                     url = new URL("http://192.168.10.103:8888/benben.json");
                     /*2.开启一个链接*/
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    /*3.设置常见的请求参数（请求头）*/
-                    connection.setConnectTimeout(3000);//请求超时
+                    /*3.设置常见的请求参数*/
+                    connection.setConnectTimeout(2000);//请求超时
                     connection.setReadTimeout(4000);//读取超时
-                    connection.setRequestMethod("GET");//默认是GET请求
-                    /*4.获取响应码*/
+                    connection.setRequestMethod("GET");//请求方式（默认为GET请求）
+
+                    /*4.获取响应码并做判断*/
                     if (connection.getResponseCode() == 200) {
                         /*5.以流的形式，将数据获取下来*/
                         InputStream is = connection.getInputStream();
-                        /*6将流转换成字符串（工具类封装）*/
+                        /*6.将流转换成字符串（工具类对其进行了封装）*/
                         String json = StreamUtil.streamToString(is);
                         /*7.json解析*/
-                        try {
-                            JSONObject object = new JSONObject(json);
-                            String versionName = object.getString("versionName");
-                            mVersionDes = object.getString("versionDes");
-                            String versionCode = object.getString("versionCode");
-                            mDownloadUrl = object.getString("downloadUrl");
-                            /*8.比对版本号（服务器版本号大于本地版本号，提示用户更新）*/
-                            if (mVersionCode < Integer.parseInt(versionCode)) {
-                                /*8.1提示用户更新，弹出对话框，消息机制*/
-                                message.what = UPDATE_VERSION;
-                            } else {
-                                /*8.2直接进入程序界面*/
-                                message.what = ENTER_HOME;
-                            }
-                        } catch (JSONException e) {
-                            /*json错误*/
-                            message.what = JSON_ERROR;
-                            e.printStackTrace();
+                        JSONObject object = new JSONObject(json);
+                        String versionName = object.getString("versionName");
+                         versionDes = object.getString("versionDes");
+                        String versionCode = object.getString("versionCode");
+                         downloadUrl = object.getString("downloadUrl");
+                        /*8.对比版本号*/
+                        if (mVersionCode < Integer.parseInt(versionCode)) {
+                            message.what = UPDATE_VERSION;
+                        }else {
+                            message.what = ENTER_HOME;
                         }
                     }
                 } catch (MalformedURLException e) {
-                    /*url不正确*/
+                    /*url异常*/
                     message.what = URL_ERROR;
                     e.printStackTrace();
-                } catch (IOException e) {
+                }   catch (IOException e) {
+                        /*输入输出异常*/
                     message.what = IO_ERROR;
                     e.printStackTrace();
-                } finally {
-                    /*指定睡眠时间  请求网络的时长超过4秒则不做处理*/
-                    /*请求网络的时长小于4秒 强制让其睡眠4秒*/
-                    long endTime = System.currentTimeMillis();
+                } catch (JSONException e) {
+                    /*json解析异常*/
+                    message.what = JSON_ERROR;
+                    e.printStackTrace();
+                }finally {
+                    long endTime = System.currentTimeMillis();//获取网络链接结束时的时间
                     long time = endTime - startTime;
                     if (time < 4000) {
                         try {
@@ -313,21 +263,21 @@ public class SplashActivity extends BaseActivity {
                             e.printStackTrace();
                         }
                     }
-                    mHandler.sendMessage(message);
+                    handler.sendMessage(message);
                 }
             }
         }).start();
+
     }
 
     /**
-     * 获取版本名称：清单文件中
-     *
+     * 获取版本名称 从清单文件中获取
      * @return 应用版本名称 返回null 代表有异常
      */
     public String getVersionName() {
-      /*1.包的管理者*/
+        /*实例化包的管理者*/
         PackageManager pm = getPackageManager();
-        /*2.从包的管理者对象中，获取指定包名的基本信息.传0代表获取基本信息*/
+        /*2.从包的管理者对象中获取包名的基本信息 传0表示获取所有的信息*/
         try {
             PackageInfo packageInfo = pm.getPackageInfo(getPackageName(), 0);
             return packageInfo.versionName;
@@ -338,14 +288,13 @@ public class SplashActivity extends BaseActivity {
     }
 
     /**
-     * 返回版本号
-     *
-     * @return 非0代表为成功
+     * 获取本地的版本号
+     * @return 非0代表成功
      */
     public int getVersionCode() {
-  /*1.包的管理者*/
+        /*1.实例化包的管理者*/
         PackageManager pm = getPackageManager();
-        /*2.从包的管理者对象中，获取指定包名的基本信息.传0代表获取基本信息*/
+        /*2.从包的管理者对象中获取包名的基本信息，传0表示或所有基本信息*/
         try {
             PackageInfo packageInfo = pm.getPackageInfo(getPackageName(), 0);
             return packageInfo.versionCode;

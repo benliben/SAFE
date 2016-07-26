@@ -5,7 +5,7 @@ import android.widget.Toast;
 
 /**
  * Created by LiYuanxiong on 2016/7/26 9:39.
- * Desribe:
+ * Desribe:toast
  */
 public class ToastUrl {
     /**
