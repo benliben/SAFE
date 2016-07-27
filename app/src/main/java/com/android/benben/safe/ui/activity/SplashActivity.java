@@ -12,7 +12,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.ProgressBar;
+import android.view.animation.AlphaAnimation;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.benben.safe.R;
@@ -49,6 +50,8 @@ public class SplashActivity extends BaseActivity {
     private static final int JSON_ERROR = 500;//URL出错
     @InjectView(R.id.tv_version_name)
     TextView mVersionName;
+    @InjectView(R.id.rl_root)
+    RelativeLayout mRoot;
 
     private int mVersionCode;
     private String mVersionDes;
@@ -95,6 +98,16 @@ public class SplashActivity extends BaseActivity {
         ButterKnife.inject(this);
         /*获取数据*/
         initData();
+        /*初始化动画*/
+        initAnimation();
+    }
+
+    /*添加淡入的动画效果*/
+    private void initAnimation() {
+        AlphaAnimation animation = new AlphaAnimation(0, 1);
+        animation.setDuration(3000);
+        mRoot.startAnimation(animation);
+
     }
 
 
@@ -195,16 +208,25 @@ public class SplashActivity extends BaseActivity {
 
     /**
      * 安装对应的apk
+     *
      * @param file 安装的文件
      */
     private void installApk(File file) {
         /*系统应用界面*/
+//        Intent intent = new Intent("android.intent.action.VIEW");
+//        intent.addCategory("android.intent.category.DEFAULT");
+        /*文件作为数据源*/
+//        intent.setData(Uri.fromFile(file));
+        /*设置安装的类型*/
+//        intent.setType("application/vnd.android.package-archive");
+//        startActivityForResult(intent, 0);
+
+        //系统应用界面,源码,安装apk入口
         Intent intent = new Intent("android.intent.action.VIEW");
         intent.addCategory("android.intent.category.DEFAULT");
-        /*文件作为数据源*/
-        intent.setData(Uri.fromFile(file));
-        /*设置安装的类型*/
-        intent.setType("application/vnd.android.package-archive");
+        //文件作为数据源
+        //设置安装的类型
+        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
         startActivityForResult(intent, 0);
     }
 
@@ -221,7 +243,7 @@ public class SplashActivity extends BaseActivity {
      * 进入应用程序的主界面
      */
     private void enterHome() {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, HomeActivity.class));
         /*在开启一个新的界面后 将导航页面关闭*/
         finish();
     }

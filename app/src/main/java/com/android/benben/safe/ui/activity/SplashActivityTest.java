@@ -84,7 +84,7 @@ public class SplashActivityTest extends BaseActivity {
 
     /*进入主界面*/
     private void enterHome() {
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, HomeActivity.class));
         finish();
     }
 
