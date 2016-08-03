@@ -1,5 +1,6 @@
 package com.android.benben.safe.ui.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,10 +9,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.android.benben.safe.R;
 import com.android.benben.safe.ui.adapter.HomeAdapter;
+import com.android.benben.safe.utils.SpUtil;
 import com.android.benben.safe.utils.ToastUrl;
 
 import java.util.ArrayList;
@@ -63,6 +68,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onItemClick(View view, int position) {
                 switch (position) {
                     case 0:
+                        showDialog();
                         break;
                     case 1:
                         break;
@@ -112,6 +118,122 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void showDialog() {
+        /*判断本地是否有存储密码(sp 字符串)*/
+        String psd = SpUtil.getString(this, ConstantValue.MOBILE_SAFE_PSD, "");
+        /*1.没有密码就是第一次创建*/
+        if (TextUtils.isEmpty(psd)) {
+            showSetPsdDialog();
+        } else {
+            /*2.有密码就不是第一次创建*/
+            showConfirmPsdDialog();
+        }
+
+
+    }
+
+    /**
+     * 第一次创建密码对话框
+     */
+    private void showSetPsdDialog() {
+        /*因为需要自己去展示定义的对话框的展示样式，所以需要调用dialog.setView(view)
+        * view是自己编写的xml转换成view对象 */
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog dialog = builder.create();
+
+        final View view = View.inflate(this, R.layout.dialog_set_psd, null);
+        /*让对话框显示一个自己定义的对话框界面效果*/
+        dialog.setView(view);
+        dialog.show();
+
+        Button bt_submit = (Button) view.findViewById(R.id.bt_submit);
+        Button bt_cancel = (Button) view.findViewById(R.id.bt_cancel);
+        bt_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText et_set_psd = (EditText) view.findViewById(R.id.et_set_psd);
+                EditText et_confirm_psd = (EditText) view.findViewById(R.id.et_confirm_psd);
+
+                String set_psd = et_set_psd.getText().toString();
+                String confirm_psd = et_confirm_psd.getText().toString();
+                if (!TextUtils.isEmpty(set_psd) && !TextUtils.isEmpty(confirm_psd)) {
+                    if (set_psd .equals(confirm_psd) ) {
+                        /*进入应用手机防盗模块，开启一个新的界面*/
+                        Intent intent = new Intent(HomeActivity.this, TestActivity.class);
+                        startActivity(intent);
+                        /*跳转到新的界面 隐藏对话框*/
+                        dialog.dismiss();
+
+                        SpUtil.putString(getApplicationContext(), ConstantValue.MOBILE_SAFE_PSD, set_psd);
+
+                    } else {
+                        ToastUrl.show(getApplicationContext(), "两次输入不一致，请重新输入");
+                    }
+
+                } else {
+                    ToastUrl.show(getApplicationContext(), "内容不能为空");
+                }
+            }
+        });
+        bt_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+    /**
+     * 确认密码对话框
+     */
+    private void showConfirmPsdDialog() {
+                /*因为需要自己去展示定义的对话框的展示样式，所以需要调用dialog.setView(view)
+        * view是自己编写的xml转换成view对象 */
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog dialog = builder.create();
+
+        final View view = View.inflate(this, R.layout.dialog_confirm_psd, null);
+        /*让对话框显示一个自己定义的对话框界面效果*/
+        dialog.setView(view);
+        dialog.show();
+
+        Button bt_submit = (Button) view.findViewById(R.id.bt_submit);
+        Button bt_cancel = (Button) view.findViewById(R.id.bt_cancel);
+        bt_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                EditText et_confirm_psd = (EditText) view.findViewById(R.id.et_confirm_psd);
+
+                String confirm_psd = et_confirm_psd.getText().toString();
+                String set_psd = SpUtil.getString(getApplicationContext(), ConstantValue.MOBILE_SAFE_PSD, "");
+                if (!TextUtils.isEmpty(confirm_psd)) {
+                    if (set_psd .equals(confirm_psd) ) {
+                        /*进入应用手机防盗模块，开启一个新的界面*/
+                        Intent intent = new Intent(HomeActivity.this, TestActivity.class);
+                        startActivity(intent);
+                        /*跳转到新的界面 隐藏对话框*/
+                        dialog.dismiss();
+
+
+                    } else {
+                        ToastUrl.show(getApplicationContext(), "密码错误，请重新输入");
+                    }
+
+                } else {
+                    ToastUrl.show(getApplicationContext(), "内容不能为空");
+                }
+            }
+        });
+        bt_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
     }
 
 
