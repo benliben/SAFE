@@ -17,6 +17,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.benben.safe.R;
+import com.android.benben.safe.utils.SpUtil;
 import com.android.benben.safe.utils.StreamUtil;
 import com.android.benben.safe.utils.ToastUrl;
 import com.lidroid.xutils.HttpUtils;
@@ -265,7 +266,15 @@ public class SplashActivity extends BaseActivity {
          * 服务端版本号
          * 新版本apk下载地址
          */
-        checkVersion();
+        if (SpUtil.getBoolean(this, ConstantValue.OPEN_UPDATE, false)) {
+            checkVersion();
+        }else {
+            /*消息机制*/
+//            mHandler.sendMessageDelayed(,4000);
+            /*在发送消息4秒后Enter_home状态码指向的消息*/
+            mHandler.sendEmptyMessageDelayed(ENTER_HOME, 4000);
+        }
+
     }
 
     /**

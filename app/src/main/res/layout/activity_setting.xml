@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <!--将以下的相对布局 抽取到单独的一个类中去管理，以后只需要在布局文件中添加此类 即可达到以下效果-->
 
-    <TextView
-        style="@style/TitleStyle" />
+    <TextView style="@style/TitleStyle" />
 
     <com.android.benben.safe.view.SettingItemView
+        xmlns:mobilesafe="http://schemas.android.com/apk/res/com.android.benben.safe"
         android:id="@+id/siv_update"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        mobilesafe:destitle="自动更新设置"
+        mobilesafe:desoff="自动跟新已经关闭"
+        mobilesafe:deson="自动更新已经开启"
+        />
     <com.android.benben.safe.view.SettingItemView
+        xmlns:mobilesafe="http://schemas.android.com/apk/res/com.android.benben.safe"
+        android:id="@+id/siv_location"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        mobilesafe:destitle="电话归属地的显示"
+        mobilesafe:desoff="电话归属地显示已关闭"
+        mobilesafe:deson="电话归属地显示已开启"
+        />
+
+
 
 </LinearLayout>
