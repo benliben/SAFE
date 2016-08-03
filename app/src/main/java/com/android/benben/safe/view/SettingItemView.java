@@ -12,23 +12,18 @@ import com.android.benben.safe.R;
 
 /**
  * Created by LiYuanxiong on 2016/8/1 15:55.
- * Desribe:
+ * Desribe:抽取布局文件的管理类
  */
 public class SettingItemView extends RelativeLayout {
     private static final String TAG = "lyx";
     private static final String NAMESPACE = "http://schemas.android.com/apk/res/com.android.benben.safe";
     private final CheckBox cd_box;
-    private final TextView tv_des;
-    private final TextView tv_title;
-    private String destitle;
-    private String desoff;
-    private String deson;
+    private final TextView tv_des, tv_title;
+    private String destitle,desoff,deson;
 
     public SettingItemView(Context context) {
-//        super(context);
         this(context, null);
     }
-
     public SettingItemView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
@@ -43,9 +38,9 @@ public class SettingItemView extends RelativeLayout {
         tv_des = (TextView) findViewById(R.id.tv_des);
         cd_box = (CheckBox) findViewById(R.id.cb_box);
 
-
         /*获取自定义以及原生属性的操作，写在此处，AttributeSet attrs对象中获取*/
         initAttrs(attrs);
+
         /*获取布局文件中定义的字符串，赋值给标题*/
         tv_title.setText(destitle);
 
@@ -56,16 +51,6 @@ public class SettingItemView extends RelativeLayout {
      *              返回属性集合中定义属性值
      */
     private void initAttrs(AttributeSet attrs) {
-//        /*获取属性的总个数*/
-//        int a = attrs.getAttributeCount();
-//        Log.i("lyx", "initAttrs: " + a);
-//        /*获取属性名称及属性值*/
-//        for (int i = 0; i < a; i++) {
-//            Log.i(TAG, "name" + attrs.getAttributeName(i));
-//            Log.i(TAG, "value" + attrs.getAttributeValue(i));
-//            Log.i(TAG, "==============================");
-//        }
-
         destitle = attrs.getAttributeValue(NAMESPACE, "destitle");
         desoff = attrs.getAttributeValue(NAMESPACE, "desoff");
          deson = attrs.getAttributeValue(NAMESPACE, "deson");
@@ -76,12 +61,9 @@ public class SettingItemView extends RelativeLayout {
      *
      * @return 返回当前settingItemView是否选中状态 true开启
      */
-
     public boolean isCheck() {
         /*由checkBox的选中结果，决定当前条目是否开启*/
         return cd_box.isChecked();
-
-
     }
 
     /**

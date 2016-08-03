@@ -10,20 +10,6 @@
         style="@style/TitleStyle"
         android:text="功能区" />
 
-    <!-- android:ellipsize="end" 添加省略点的所在位置-->
-    <!--<TextView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:ellipsize="marquee"-->
-        <!--android:padding="5dp"-->
-        <!--android:singleLine="true"-->
-        <!--android:marqueeRepeatLimit="marquee_forever"-->
-        <!--android:focusableInTouchMode="true"-->
-        <!--android:focusable="true"-->
-        <!--android:text="的卡号的发掘的福利卡都发来哈哈发拉-->
-        <!--卡拉卡飞机拉飞机拉减肥咖啡加咖啡就卡机付款了的积分卡积分"-->
-        <!--android:textColor="#000" -->
-        <!--/>-->
     <com.android.benben.safe.view.FocusTestView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

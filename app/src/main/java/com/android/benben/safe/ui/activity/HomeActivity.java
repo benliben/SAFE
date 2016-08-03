@@ -120,6 +120,9 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 弹出对话框
+     */
     private void showDialog() {
         /*判断本地是否有存储密码(sp 字符串)*/
         String psd = SpUtil.getString(this, ConstantValue.MOBILE_SAFE_PSD, "");
@@ -130,26 +133,25 @@ public class HomeActivity extends AppCompatActivity {
             /*2.有密码就不是第一次创建*/
             showConfirmPsdDialog();
         }
-
-
     }
 
     /**
      * 第一次创建密码对话框
      */
     private void showSetPsdDialog() {
-        /*因为需要自己去展示定义的对话框的展示样式，所以需要调用dialog.setView(view)
+        /*1因为需要自己去展示定义的对话框的展示样式，所以需要调用dialog.setView(view)
         * view是自己编写的xml转换成view对象 */
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final AlertDialog dialog = builder.create();
 
         final View view = View.inflate(this, R.layout.dialog_set_psd, null);
-        /*让对话框显示一个自己定义的对话框界面效果*/
+        /*2让对话框显示一个自己定义的对话框界面效果*/
         dialog.setView(view);
         dialog.show();
 
         Button bt_submit = (Button) view.findViewById(R.id.bt_submit);
         Button bt_cancel = (Button) view.findViewById(R.id.bt_cancel);
+        /*确定的点击*/
         bt_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -165,18 +167,17 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(intent);
                         /*跳转到新的界面 隐藏对话框*/
                         dialog.dismiss();
-
                         SpUtil.putString(getApplicationContext(), ConstantValue.MOBILE_SAFE_PSD, set_psd);
-
                     } else {
                         ToastUrl.show(getApplicationContext(), "两次输入不一致，请重新输入");
                     }
-
                 } else {
                     ToastUrl.show(getApplicationContext(), "内容不能为空");
                 }
             }
         });
+
+
         bt_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -201,12 +202,12 @@ public class HomeActivity extends AppCompatActivity {
 
         Button bt_submit = (Button) view.findViewById(R.id.bt_submit);
         Button bt_cancel = (Button) view.findViewById(R.id.bt_cancel);
+
+        /*点击了确定*/
         bt_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 EditText et_confirm_psd = (EditText) view.findViewById(R.id.et_confirm_psd);
-
                 String confirm_psd = et_confirm_psd.getText().toString();
                 String set_psd = SpUtil.getString(getApplicationContext(), ConstantValue.MOBILE_SAFE_PSD, "");
                 if (!TextUtils.isEmpty(confirm_psd)) {
@@ -216,17 +217,16 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(intent);
                         /*跳转到新的界面 隐藏对话框*/
                         dialog.dismiss();
-
-
                     } else {
                         ToastUrl.show(getApplicationContext(), "密码错误，请重新输入");
                     }
-
                 } else {
                     ToastUrl.show(getApplicationContext(), "内容不能为空");
                 }
             }
         });
+
+        /*点击了取消*/
         bt_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

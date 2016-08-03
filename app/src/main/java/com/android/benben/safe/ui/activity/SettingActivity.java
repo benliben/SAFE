@@ -11,7 +11,7 @@ import com.android.benben.safe.view.SettingItemView;
 
 /**
  * Created by LiYuanxiong on 2016/8/1 15:34.
- * Desribe:
+ * Desribe设置界面
  */
 public class SettingActivity extends BaseActivity {
 
@@ -26,14 +26,15 @@ public class SettingActivity extends BaseActivity {
     }
 
 
-
+    /**
+     * 更新功能的实现
+     */
     private void initUpdate() {
-
+        /*找到控件*/
         final SettingItemView siv_update = (SettingItemView) findViewById(R.id.siv_update);
-        /*获取已有的开关状态，用作显示*/
+        /*1获取已有的开关状态，用作显示*/
         boolean open_update = SpUtil.getBoolean(this, ConstantValue.OPEN_UPDATE, false);
-        Log.i(TAG, "==============="+open_update);
-        /*是否被选择，根据上次存储的结果去做决定*/
+        /*2是否被选择，根据上次存储的结果去做决定*/
         siv_update.setCheck(open_update);
         siv_update.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,11 +44,12 @@ public class SettingActivity extends BaseActivity {
                 /*将原有的状态取反*/
                 siv_update.setCheck(!isCheck);
                 /*将取反后的状态存储到相应的sp中*/
-                SpUtil.putBoolean(getApplicationContext(),ConstantValue.OPEN_UPDATE,!isCheck);
-                Log.i(TAG, "===============");
+                SpUtil.putBoolean(getApplicationContext(), ConstantValue.OPEN_UPDATE, !isCheck);
             }
         });
     }
+
+
 
     private void initLocation() {
         final SettingItemView siv_location = (SettingItemView) findViewById(R.id.siv_location);
@@ -62,7 +64,7 @@ public class SettingActivity extends BaseActivity {
                 /*将原有的状态取反*/
                 siv_location.setCheck(!isCheck);
                 /*将取反后的状态存储到相应的sp中*/
-                SpUtil.putBoolean(getApplicationContext(),ConstantValue.OPEN_LOCATION,!isCheck);
+                SpUtil.putBoolean(getApplicationContext(), ConstantValue.OPEN_LOCATION, !isCheck);
             }
         });
     }

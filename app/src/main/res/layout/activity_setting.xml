@@ -17,6 +17,7 @@
         mobilesafe:desoff="自动跟新已经关闭"
         mobilesafe:deson="自动更新已经开启"
         />
+
     <com.android.benben.safe.view.SettingItemView
         xmlns:mobilesafe="http://schemas.android.com/apk/res/com.android.benben.safe"
         android:id="@+id/siv_location"
