@@ -8,19 +8,20 @@ import java.security.NoSuchAlgorithmException;
  * Md5的加密模式
  */
 public class Md5Util {
-    public static void main(String[] aggs) {
-        /*普通模式*/
-//        String psd = "123";
-        /*加盐模式*/
-        String psd = "123" + "benben";
-        encoder(psd);
-    }
 
+    /**
+     *
+     *
+     * @param psd
+     */
     /**
      * 给指定字符串安装MD%算法加密
      * @param psd 需要加密的密码
+     * @return MD5字符串 返还""的时候出现错误
      */
-    private static void encoder(String psd) {
+    public static String encoder(String psd) {
+        /*加盐处理*/
+        psd = psd + "benben";
         StringBuffer stringBuffer = new StringBuffer();
         /*1.指定加密算法类型*/
 
@@ -40,10 +41,12 @@ public class Md5Util {
                 /*4.拼接字符串的过程*/
                 stringBuffer.append(hexString);
             }
+            return stringBuffer.toString();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
 
+        return "";
     }
 
 }

@@ -10,12 +10,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.benben.safe.R;
 import com.android.benben.safe.ui.adapter.HomeAdapter;
+import com.android.benben.safe.utils.Md5Util;
 import com.android.benben.safe.utils.SpUtil;
 import com.android.benben.safe.utils.ToastUrl;
 
@@ -27,6 +29,7 @@ import butterknife.InjectView;
 
 public class HomeActivity extends AppCompatActivity {
 
+    private static final String TAG = "HomeActivity";
     @InjectView(R.id.rv_content)
     RecyclerView mContent;
 
@@ -167,7 +170,7 @@ public class HomeActivity extends AppCompatActivity {
                         startActivity(intent);
                         /*跳转到新的界面 隐藏对话框*/
                         dialog.dismiss();
-                        SpUtil.putString(getApplicationContext(), ConstantValue.MOBILE_SAFE_PSD, set_psd);
+                        SpUtil.putString(getApplicationContext(), ConstantValue.MOBILE_SAFE_PSD, Md5Util.encoder(set_psd));
                     } else {
                         ToastUrl.show(getApplicationContext(), "两次输入不一致，请重新输入");
                     }
@@ -210,8 +213,11 @@ public class HomeActivity extends AppCompatActivity {
                 EditText et_confirm_psd = (EditText) view.findViewById(R.id.et_confirm_psd);
                 String confirm_psd = et_confirm_psd.getText().toString();
                 String set_psd = SpUtil.getString(getApplicationContext(), ConstantValue.MOBILE_SAFE_PSD, "");
+                Log.i(TAG, "onClick: "+set_psd);
                 if (!TextUtils.isEmpty(confirm_psd)) {
-                    if (set_psd .equals(confirm_psd) ) {
+                    /*将存储在sp中的32位的密码获取出来，然后将输入的密码进行加密处理然后在进行对比*/
+                    if (set_psd .equals(Md5Util.encoder(confirm_psd)) ) {
+
                         /*进入应用手机防盗模块，开启一个新的界面*/
                         Intent intent = new Intent(HomeActivity.this, TestActivity.class);
                         startActivity(intent);
