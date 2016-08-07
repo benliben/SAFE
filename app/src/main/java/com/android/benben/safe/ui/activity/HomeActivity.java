@@ -149,7 +149,9 @@ public class HomeActivity extends AppCompatActivity {
 
         final View view = View.inflate(this, R.layout.dialog_set_psd, null);
         /*2让对话框显示一个自己定义的对话框界面效果*/
-        dialog.setView(view);
+//        dialog.setView(view);
+        /*包含有上下左右的边距  现在设置为0*/
+        dialog.setView(view,0,0,0,0);
         dialog.show();
 
         Button bt_submit = (Button) view.findViewById(R.id.bt_submit);
@@ -201,6 +203,8 @@ public class HomeActivity extends AppCompatActivity {
         final View view = View.inflate(this, R.layout.dialog_confirm_psd, null);
         /*让对话框显示一个自己定义的对话框界面效果*/
         dialog.setView(view);
+        /*为了维护低版本的取消内边距*/
+        dialog.setView(view,0,0,0,0);
         dialog.show();
 
         Button bt_submit = (Button) view.findViewById(R.id.bt_submit);
