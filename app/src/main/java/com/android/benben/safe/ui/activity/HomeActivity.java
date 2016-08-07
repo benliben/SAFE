@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -20,9 +18,6 @@ import com.android.benben.safe.ui.adapter.HomeAdapter;
 import com.android.benben.safe.utils.Md5Util;
 import com.android.benben.safe.utils.SpUtil;
 import com.android.benben.safe.utils.ToastUrl;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -168,7 +163,7 @@ public class HomeActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(set_psd) && !TextUtils.isEmpty(confirm_psd)) {
                     if (set_psd .equals(confirm_psd) ) {
                         /*进入应用手机防盗模块，开启一个新的界面*/
-                        Intent intent = new Intent(HomeActivity.this, TestActivity.class);
+                        Intent intent = new Intent(HomeActivity.this, SetupOverActivity.class);
                         startActivity(intent);
                         /*跳转到新的界面 隐藏对话框*/
                         dialog.dismiss();
@@ -223,7 +218,7 @@ public class HomeActivity extends AppCompatActivity {
                     if (set_psd .equals(Md5Util.encoder(confirm_psd)) ) {
 
                         /*进入应用手机防盗模块，开启一个新的界面*/
-                        Intent intent = new Intent(HomeActivity.this, TestActivity.class);
+                        Intent intent = new Intent(HomeActivity.this, SetupOverActivity.class);
                         startActivity(intent);
                         /*跳转到新的界面 隐藏对话框*/
                         dialog.dismiss();

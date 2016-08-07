@@ -20,7 +20,10 @@
         </activity>
         <activity android:name=".ui.activity.HomeActivity"></activity>
         <activity android:name=".ui.activity.SettingActivity"></activity>
-        <activity android:name=".ui.activity.TestActivity"></activity>
+        
+        <!--手机防盗功能-->
+        <activity android:name=".ui.activity.SetupOverActivity"></activity>
+        <activity android:name=".ui.activity.SetUpActivity"></activity>
     </application>
 
 
