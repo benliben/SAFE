@@ -71,4 +71,16 @@ public class SpUtil {
         }
         return sp.getString(key, defValue);
     }
+
+    /**
+     *从sp中移除指定节点
+     * @param context 上下文
+     * @param key 需要移节点的名称
+     */
+    public static void remove(Context context, String key) {
+        if (sp ==null) {
+            sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+        }
+        sp.edit().remove(key).commit();
+    }
 }

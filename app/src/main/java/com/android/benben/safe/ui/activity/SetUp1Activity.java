@@ -10,7 +10,7 @@ import com.android.benben.safe.R;
 /**
  * Created by Administrator on 2016/8/7.
  */
-public class SetUpActivity extends BaseActivity {
+public class SetUp1Activity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

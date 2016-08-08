@@ -16,6 +16,7 @@
         android:textSize="19sp" />
 
     <EditText
+        android:id="@+id/et_phone_number"
         android:layout_width="match_parent"
         android:hint="请输入接收报警短信的号码"
         android:layout_height="wrap_content" />
@@ -23,7 +24,7 @@
     <Button
         android:id="@+id/bt_phone"
         android:layout_width="match_parent"
-        android:background="@drawable/btn_green_normal"
+        android:background="@drawable/selector_confirm_bg"
         android:text="选择联系人"
         android:layout_height="wrap_content" />
 

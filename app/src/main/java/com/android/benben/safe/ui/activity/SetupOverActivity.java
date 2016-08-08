@@ -20,10 +20,10 @@ public class SetupOverActivity extends BaseActivity {
         boolean setup_over=SpUtil.getBoolean(this, ConstantValue.SETUP_OVER, false);
         if (setup_over) {
             /*密码输入成功，并且四个导航界面设置成功-----》停留在设置完成功能列表界面*/
-            setContentView(R.layout.a_setup_1);
+            setContentView(R.layout.a_setup);
         }else {
             /*如果设置没有成功，-----》跳转到导航界面的第一个界面*/
-            Intent intent = new Intent(this, SetUpActivity.class);
+            Intent intent = new Intent(this, SetUp1Activity.class);
             startActivity(intent);
 
             /*开启了一个新的界面关闭本界面*/

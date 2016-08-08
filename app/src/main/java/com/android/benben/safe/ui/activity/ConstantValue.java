@@ -22,4 +22,17 @@ public class ConstantValue {
      * 是否设置完成导航的key
      */
     public static final String SETUP_OVER = "setup_over";
+    /**
+     * 是否开启防盗保护Key，总开关
+     */
+    public static final String OPEN_SECURITY = "open_security";
+    /**
+     * 是否开启sim卡的绑定key
+     */
+    public static final String OPEN_BOUND_SIM = "open_bound_sim";
+
+    /**
+     * 接收警告短信的电话号码key
+     */
+    public static final String PHONE_NUMBER = "phone_number";
 }
