@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:text="4.恭喜您，设置完成"
+        style="@style/TitleStyle" />
+
+        <com.android.benben.safe.view.SettingItemView
+            android:id="@+id/siv_setup_4"
+            xmlns:setup4="http://schemas.android.com/apk/res/com.android.benben.safe"
+            setup4:desoff="你没有开启防盗保护"
+            setup4:deson="你已开启防盗保护"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </com.android.benben.safe.view.SettingItemView>
+
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/presence_invisible" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/presence_invisible" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/presence_invisible" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/presence_online" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/phone" />
+        <!--图片选择器-->
+        <Button style="@style/NextBtn"
+            android:text="设置完成"
+            android:onClick="nextPage4"/>
+
+        <Button style="@style/LastBtn"
+            android:onClick="lastPage4"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

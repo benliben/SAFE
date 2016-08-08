@@ -3,9 +3,6 @@ package com.android.benben.safe.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import com.android.benben.safe.R;
 import com.android.benben.safe.utils.SpUtil;
@@ -23,8 +20,7 @@ public class SetupOverActivity extends BaseActivity {
         boolean setup_over=SpUtil.getBoolean(this, ConstantValue.SETUP_OVER, false);
         if (setup_over) {
             /*密码输入成功，并且四个导航界面设置成功-----》停留在设置完成功能列表界面*/
-            setContentView(R.layout.a_setup_over
-            );
+            setContentView(R.layout.a_setup_1);
         }else {
             /*如果设置没有成功，-----》跳转到导航界面的第一个界面*/
             Intent intent = new Intent(this, SetUpActivity.class);

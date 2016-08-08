@@ -32,9 +32,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
-        android:padding="2dp"
         android:drawableLeft="@android:drawable/star_big_on"
         android:gravity="center_vertical"
+        android:padding="2dp"
         android:text="GPS追踪"
         android:textColor="#000"
         android:textSize="19sp" />
@@ -43,9 +43,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
-        android:padding="2dp"
         android:drawableLeft="@android:drawable/star_big_on"
         android:gravity="center_vertical"
+        android:padding="2dp"
         android:text="远程数据销毁"
         android:textColor="#000"
         android:textSize="19sp" />
@@ -54,18 +54,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
-        android:padding="2dp"
         android:drawableLeft="@android:drawable/star_big_on"
         android:gravity="center_vertical"
+        android:padding="2dp"
         android:text="远程锁屏"
         android:textColor="#000"
         android:textSize="19sp" />
 
     <LinearLayout
-        android:gravity="center"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -87,23 +87,22 @@
             android:layout_height="wrap_content"
             android:src="@android:drawable/presence_invisible" />
     </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <ImageView
             android:layout_width="wrap_content"
-            android:src="@mipmap/setup1"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_height="wrap_content" />
+            android:src="@mipmap/setup1" />
         <!--图片选择器-->
         <Button
-            android:layout_width="wrap_content"
-            android:text="下一页"
-            android:background=""
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_height="wrap_content" />
+            android:onClick="nextPage1"
+           style="@style/NextBtn"/>
+
     </RelativeLayout>
 
 </LinearLayout>

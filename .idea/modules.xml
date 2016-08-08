@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SAFE.iml" filepath="$PROJECT_DIR$/SAFE.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SAFE.iml" filepath="$PROJECT_DIR$/SAFE.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/md5utils/md5utils.iml" filepath="$PROJECT_DIR$/md5utils/md5utils.iml" />
       <module fileurl="file://$PROJECT_DIR$/md5utils/md5utils.iml" filepath="$PROJECT_DIR$/md5utils/md5utils.iml" />
     </modules>
   </component>
