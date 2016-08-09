@@ -66,6 +66,8 @@ public class SetUp4Activity extends BaseActivity {
             SpUtil.putBoolean(this,ConstantValue.SETUP_OVER,open_security);
             startActivity(new Intent(this,SetupOverActivity.class));
             finish();
+            overridePendingTransition(R.anim.next_in_anim,R.anim.next_out_anim);
+
         }else {
             SpUtil.putBoolean(this,ConstantValue.SETUP_OVER,open_security);
             ToastUrl.show(this,"请开启防盗保护措施");
@@ -77,6 +79,7 @@ public class SetUp4Activity extends BaseActivity {
     public void lastPage4(View view) {
         startActivity(new Intent(this, SetUp3Activity.class));
         finish();
+        overridePendingTransition(R.anim.pre_in_anim,R.anim.pre_out_anim);
 
     }
 

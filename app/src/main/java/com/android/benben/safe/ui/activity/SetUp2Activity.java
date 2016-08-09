@@ -55,11 +55,15 @@ public class SetUp2Activity extends BaseActivity {
             ToastUrl.show(this,"请绑定SIM卡");
         }
 
+        overridePendingTransition(R.anim.next_in_anim,R.anim.next_out_anim);
+
+
     }
 
     public void lastPage2(View view) {
         startActivity(new Intent(this, SetUp1Activity.class));
         finish();
+        overridePendingTransition(R.anim.pre_in_anim,R.anim.pre_out_anim);
     }
 
     @OnClick(R.id.siv_sim_bound)

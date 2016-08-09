@@ -21,6 +21,8 @@ public class SetUp1Activity extends BaseActivity {
         Intent intent = new Intent(this, SetUp2Activity.class);
         startActivity(intent);
         finish();
+        /*开启平移动画*/
+        overridePendingTransition(R.anim.next_in_anim,R.anim.next_out_anim);
 
     }
 }
