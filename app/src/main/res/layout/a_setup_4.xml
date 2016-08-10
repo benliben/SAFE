@@ -57,10 +57,10 @@
         <!--图片选择器-->
         <Button style="@style/NextBtn"
             android:text="设置完成"
-            android:onClick="nextPage4"/>
+            />
 
         <Button style="@style/LastBtn"
-            android:onClick="lastPage4"/>
+            />
 
     </RelativeLayout>
 

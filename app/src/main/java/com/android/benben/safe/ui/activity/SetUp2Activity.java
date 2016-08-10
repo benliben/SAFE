@@ -22,7 +22,7 @@ import butterknife.OnClick;
  * Created by LiYuanxiong on 2016/8/8 11:42.
  * Desribe:
  */
-public class SetUp2Activity extends BaseActivity {
+public class SetUp2Activity extends BaseSetupActivity {
     private static final String TAG = "SetUp2Activity";
     @InjectView(R.id.siv_sim_bound)
     SettingItemView mSimBound;
@@ -35,10 +35,30 @@ public class SetUp2Activity extends BaseActivity {
         initView();
     }
 
+    @Override
+    public void showNextPage() {
+        String number = SpUtil.getString(this, ConstantValue.OPEN_BOUND_SIM, "");
+        if (!TextUtils.isEmpty(number)) {
+            startActivity(new Intent(this, SetUp3Activity.class));
+            finish();
+        } else {
+            ToastUrl.show(this, "请绑定SIM卡");
+        }
+
+        overridePendingTransition(R.anim.next_in_anim, R.anim.next_out_anim);
+    }
+
+    @Override
+    public void showPrePage() {
+        startActivity(new Intent(this, SetUp1Activity.class));
+        finish();
+        overridePendingTransition(R.anim.pre_in_anim, R.anim.pre_out_anim);
+    }
+
     private void initView() {
         /*回显，读取已有的绑定状态，*/
-        String open_bound_sim = SpUtil.getString(this, ConstantValue.OPEN_BOUND_SIM,"");
-        Log.i(TAG, "open_bound_sim: "+open_bound_sim);
+        String open_bound_sim = SpUtil.getString(this, ConstantValue.OPEN_BOUND_SIM, "");
+        Log.i(TAG, "open_bound_sim: " + open_bound_sim);
         if (TextUtils.isEmpty(open_bound_sim)) {
             mSimBound.setCheck(false);
         } else {
@@ -46,25 +66,6 @@ public class SetUp2Activity extends BaseActivity {
         }
     }
 
-    public void nextPage2(View view) {
-        String number = SpUtil.getString(this, ConstantValue.OPEN_BOUND_SIM, "");
-        if (TextUtils.isEmpty(number)) {
-            startActivity(new Intent(this, SetUp3Activity.class));
-            finish();
-        }else {
-            ToastUrl.show(this,"请绑定SIM卡");
-        }
-
-        overridePendingTransition(R.anim.next_in_anim,R.anim.next_out_anim);
-
-
-    }
-
-    public void lastPage2(View view) {
-        startActivity(new Intent(this, SetUp1Activity.class));
-        finish();
-        overridePendingTransition(R.anim.pre_in_anim,R.anim.pre_out_anim);
-    }
 
     @OnClick(R.id.siv_sim_bound)
     public void onClick() {
@@ -78,9 +79,9 @@ public class SetUp2Activity extends BaseActivity {
             /*存储序列卡号*/
             TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
             String number = manager.getSimSerialNumber();
-            SpUtil.putString(this,ConstantValue.OPEN_BOUND_SIM,number);
+            SpUtil.putString(this, ConstantValue.OPEN_BOUND_SIM, number);
 
-        }else {
+        } else {
             Log.i(TAG, "===============2=============");
             /*将存储的序列卡号的节点 从sp中删除*/
             SpUtil.remove(getApplicationContext(), ConstantValue.OPEN_BOUND_SIM);

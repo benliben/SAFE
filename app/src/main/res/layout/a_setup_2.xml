@@ -67,10 +67,10 @@
             android:src="@mipmap/bind" />
         <!--图片选择器-->
         <Button style="@style/NextBtn"
-            android:onClick="nextPage2"/>
+            />
 
         <Button style="@style/LastBtn"
-            android:onClick="lastPage2"/>
+           />
 
     </RelativeLayout>
 

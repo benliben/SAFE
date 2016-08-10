@@ -21,7 +21,7 @@ import butterknife.OnClick;
  * Created by LiYuanxiong on 2016/8/8 13:54.
  * Desribe:设置安全号码界面
  */
-public class SetUp3Activity extends BaseActivity {
+public class SetUp3Activity extends BaseSetupActivity {
     private static final String TAG = "lyx";
     @InjectView(R.id.et_phone_number)
     EditText mPhoneNumber;
@@ -37,6 +37,30 @@ public class SetUp3Activity extends BaseActivity {
         initUI();
     }
 
+    @Override
+    public void showNextPage() {
+        phoneNumber = mPhoneNumber.getText().toString();
+        if (!TextUtils.isEmpty(phoneNumber)) {
+            SpUtil.putString(this, ConstantValue.PHONE_NUMBER, phoneNumber);
+            startActivity(new Intent(this, SetUp4Activity.class));
+            finish();
+            overridePendingTransition(R.anim.next_in_anim, R.anim.next_out_anim);
+
+        } else {
+            ToastUrl.show(this, "请输入接收警告短信的电话号码");
+        }
+
+    }
+
+    @Override
+    public void showPrePage() {
+        startActivity(new Intent(this, SetUp2Activity.class));
+        finish();
+
+        overridePendingTransition(R.anim.pre_in_anim, R.anim.pre_out_anim);
+
+    }
+
     private void initUI() {
         String number = SpUtil.getString(this, ConstantValue.PHONE_NUMBER, "");
         if (!TextUtils.isEmpty(number)) {
@@ -45,30 +69,6 @@ public class SetUp3Activity extends BaseActivity {
 
     }
 
-    public void nextPage3(View view) {
-
-        phoneNumber = mPhoneNumber.getText().toString();
-        Log.i(TAG, "nextPage3: "+phoneNumber);
-        if (!TextUtils.isEmpty(phoneNumber)) {
-            SpUtil.putString(this,ConstantValue.PHONE_NUMBER,phoneNumber);
-            startActivity(new Intent(this, SetUp4Activity.class));
-            finish();
-            overridePendingTransition(R.anim.next_in_anim,R.anim.next_out_anim);
-
-        }else {
-            ToastUrl.show(this,"请输入接收警告短信的电话号码");
-        }
-
-
-    }
-
-    public void lastPage3(View view) {
-        startActivity(new Intent(this, SetUp2Activity.class));
-        finish();
-
-        overridePendingTransition(R.anim.pre_in_anim,R.anim.pre_out_anim);
-
-    }
 
     @OnClick(R.id.bt_phone)
     public void onClick() {
@@ -77,14 +77,13 @@ public class SetUp3Activity extends BaseActivity {
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data!=null) {
+        if (data != null) {
             /*1.返回到当前界面的时候，接收结果的方法*/
-            String phone= data.getStringExtra("phone");
+            String phone = data.getStringExtra("phone");
             /*2.将特殊字符过滤掉(中划线转换成空字符串)*/
-            phone= phone.replace("-", "").replace(" ","").trim();
+            phone = phone.replace("-", "").replace(" ", "").trim();
             mPhoneNumber.setText(phone);
 
             /*3.存储联系人到sp中*/

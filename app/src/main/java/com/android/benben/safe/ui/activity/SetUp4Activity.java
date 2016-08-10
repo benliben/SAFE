@@ -15,7 +15,7 @@ import com.android.benben.safe.utils.ToastUrl;
  * Created by LiYuanxiong on 2016/8/8 14:37.
  * Desribe:
  */
-public class SetUp4Activity extends BaseActivity {
+public class SetUp4Activity extends BaseSetupActivity {
     private CheckBox cb_box;
 
     @Override
@@ -23,6 +23,29 @@ public class SetUp4Activity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_setup_4);
         initUI();
+    }
+
+    @Override
+    public void showNextPage() {
+        boolean open_security = SpUtil.getBoolean(this, ConstantValue.OPEN_SECURITY, false);
+        if (open_security) {
+            /*已经开启了防盗保护措施*/
+            SpUtil.putBoolean(this, ConstantValue.SETUP_OVER, open_security);
+            startActivity(new Intent(this, SetupOverActivity.class));
+            finish();
+            overridePendingTransition(R.anim.next_in_anim, R.anim.next_out_anim);
+
+        } else {
+            SpUtil.putBoolean(this, ConstantValue.SETUP_OVER, open_security);
+            ToastUrl.show(this, "请开启防盗保护措施");
+        }
+    }
+
+    @Override
+    public void showPrePage() {
+        startActivity(new Intent(this, SetUp3Activity.class));
+        finish();
+        overridePendingTransition(R.anim.pre_in_anim, R.anim.pre_out_anim);
     }
 
     private void initUI() {
@@ -33,7 +56,7 @@ public class SetUp4Activity extends BaseActivity {
         if (open_security) {
             cb_box.setText("安全设置已经开启");
             cb_box.setChecked(open_security);
-        }else {
+        } else {
             cb_box.setText("安全设置已经关闭");
             cb_box.setChecked(open_security);
         }
@@ -41,47 +64,17 @@ public class SetUp4Activity extends BaseActivity {
         cb_box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                cb_box.setChecked(!cb_box.isChecked());
 
                     /*4.切换后的状态的存储*/
-                SpUtil.putBoolean(getApplicationContext(),ConstantValue.OPEN_SECURITY,isChecked);
+                SpUtil.putBoolean(getApplicationContext(), ConstantValue.OPEN_SECURITY, isChecked);
                 /*根据开启或关闭状态，去修改显示额文字*/
                 if (isChecked) {
                     cb_box.setText("安全设置已经开启");
                     cb_box.isChecked();
-                }else {
+                } else {
                     cb_box.setText("安全设置已经关闭");
                 }
             }
         });
-
-
-
     }
-
-    public void nextPage4(View view) {
-        boolean open_security = SpUtil.getBoolean(this, ConstantValue.OPEN_SECURITY, false);
-        if (open_security){
-            /*已经开启了防盗保护措施*/
-            SpUtil.putBoolean(this,ConstantValue.SETUP_OVER,open_security);
-            startActivity(new Intent(this,SetupOverActivity.class));
-            finish();
-            overridePendingTransition(R.anim.next_in_anim,R.anim.next_out_anim);
-
-        }else {
-            SpUtil.putBoolean(this,ConstantValue.SETUP_OVER,open_security);
-            ToastUrl.show(this,"请开启防盗保护措施");
-        }
-
-
-    }
-
-    public void lastPage4(View view) {
-        startActivity(new Intent(this, SetUp3Activity.class));
-        finish();
-        overridePendingTransition(R.anim.pre_in_anim,R.anim.pre_out_anim);
-
-    }
-
-
 }

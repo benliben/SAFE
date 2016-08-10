@@ -100,7 +100,6 @@
             android:src="@mipmap/setup1" />
         <!--图片选择器-->
         <Button
-            android:onClick="nextPage1"
            style="@style/NextBtn"/>
 
     </RelativeLayout>
