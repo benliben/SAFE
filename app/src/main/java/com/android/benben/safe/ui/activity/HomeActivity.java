@@ -79,8 +79,10 @@ public class HomeActivity extends AppCompatActivity {
                     case 5:
                         break;
                     case 6:
+
                         break;
                     case 7:
+                        startActivity(new Intent(getApplicationContext(), AToolActivity.class));
                         break;
                     case 8:
                         startActivity(new Intent(getApplicationContext(), SettingActivity.class));

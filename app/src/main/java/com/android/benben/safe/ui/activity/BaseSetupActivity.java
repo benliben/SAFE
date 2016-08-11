@@ -7,7 +7,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.android.benben.safe.R;
+
 
 /**
  * Created by LiYuanxiong on 2016/8/10 10:06.

@@ -45,6 +45,9 @@
         <activity android:name=".ui.activity.SetUp4Activity"></activity>
         <activity android:name=".ui.activity.ContactListActivity"></activity>
 
+        <!--高级功能设置-->
+        <activity android:name=".ui.activity.AToolActivity"></activity>
+        <activity android:name=".ui.activity.QueryAddressActivity"></activity>
 
         <!--广播-->
         <receiver android:name=".receiver.BootReceiver">

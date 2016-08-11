@@ -16,4 +16,7 @@ public class BaseActivity extends Activity {
         super.onCreate(savedInstanceState);
         Log.i("BaseActivity", "当前所在的页面为"+getClass().getCanonicalName());
     }
+
+
+
 }
