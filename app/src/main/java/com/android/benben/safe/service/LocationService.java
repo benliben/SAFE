@@ -13,12 +13,17 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.telephony.SmsManager;
+import android.telephony.SmsMessage;
+import android.util.Log;
 
 /**
  * Created by LiYuanxiong on 2016/8/10 17:07.
  * Desribe:
  */
 public class LocationService extends Service {
+
+    private static final String TAG = "LocationService";
 
     @Override
     public void onCreate() {
@@ -31,8 +36,10 @@ public class LocationService extends Service {
         /*允许花费*/
         criteria.setCostAllowed(true);
         criteria.setAccuracy(Criteria.ACCURACY_FINE);//指定获取经纬度的精确度
-        String base = lm.getBestProvider(criteria, true);//
+        String baseProvider = lm.getBestProvider(criteria, true);//
         /*在一定事件*/
+
+        MyLocationListener listener = new MyLocationListener();
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -43,28 +50,39 @@ public class LocationService extends Service {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        lm.requestLocationUpdates(base, 0, 0, new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        });
+        lm.requestLocationUpdates(baseProvider, 0, 0, listener);
     }
+
+    class MyLocationListener implements LocationListener {
+        @Override
+        public void onLocationChanged(Location location) {
+             /*经度*/
+            double longitude = location.getLongitude();
+                /*纬度*/
+            double latitude = location.getLatitude();
+            /*发送短信*/
+//            SmsManager sms = SmsManager.getDefault();
+//            sms.sendTextMessage("", null, "", null, null);
+            Log.i(TAG, "longitude:" + longitude + "==" + "latitude:" + latitude);
+
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    }
+
 
     @Nullable
     @Override
