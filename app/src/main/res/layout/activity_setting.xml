@@ -23,9 +23,9 @@
         android:id="@+id/siv_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        mobilesafe:destitle="电话归属地的显示"
-        mobilesafe:desoff="电话归属地显示已关闭"
-        mobilesafe:deson="电话归属地显示已开启"
+        mobilesafe:destitle="电话的显示"
+        mobilesafe:desoff="电话显示已关闭"
+        mobilesafe:deson="电话显示已开启"
         />
 
 

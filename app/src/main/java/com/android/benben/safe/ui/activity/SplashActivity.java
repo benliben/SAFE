@@ -107,7 +107,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void initDB() {
-        /*1.归属地数据拷贝过程*/
+        /*1.数据拷贝过程*/
         initAddressDB("address.db");
     }
 
@@ -124,7 +124,7 @@ public class SplashActivity extends BaseActivity {
         File files = getFilesDir();
         File file=new File(files, dbName);
 
-        if (file.exists()) {
+        if (file.exists()) {//如果file文件存在
             return;
         }
         InputStream stream = null;
@@ -134,7 +134,7 @@ public class SplashActivity extends BaseActivity {
              stream = getAssets().open(dbName);
             /**3.将读取的内容写入到指定的文件夹的文件中*/
              fos = new FileOutputStream(file);
-        /**4.每次的读取内容大小*/
+            /**4.每次的读取内容大小*/
             byte[] bs = new byte[1024];
             int temp = -1;
             while ((temp = stream.read(bs)) != -1) {

@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView style="@style/TitleStyle"
-        android:text="电话号码归属地查询"/>
+        android:text="电话号码查询"/>
     <EditText
         android:id="@+id/et_query_number"
         android:layout_marginLeft="12dp"
