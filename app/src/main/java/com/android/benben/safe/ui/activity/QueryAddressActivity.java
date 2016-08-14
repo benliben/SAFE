@@ -1,8 +1,10 @@
 package com.android.benben.safe.ui.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -98,6 +100,13 @@ public class QueryAddressActivity extends BaseActivity {
                 }
             });
             mQueryNumber.startAnimation(shake);
+
+            /*手机震动效果*/
+            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+            /*震动毫秒值*/
+            vibrator.vibrate(2000);
+            /*规律的震动(震动的规则，次数*/
+            vibrator.vibrate(new long[]{2000, 5000, 2000, 5000}, 2);
 
         }
 

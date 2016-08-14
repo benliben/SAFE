@@ -1,11 +1,14 @@
 package com.android.benben.safe.ui.activity;
 
+import android.content.Intent;
+import android.location.Address;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 
 import com.android.benben.safe.R;
+import com.android.benben.safe.service.AddressService;
 import com.android.benben.safe.utils.SpUtil;
 import com.android.benben.safe.view.SettingItemView;
 
@@ -50,7 +53,9 @@ public class SettingActivity extends BaseActivity {
     }
 
 
-
+    /**
+     * 是否显示电话号码归属地
+     */
     private void initLocation() {
         final SettingItemView siv_location = (SettingItemView) findViewById(R.id.siv_location);
         boolean open_location = SpUtil.getBoolean(this, ConstantValue.OPEN_LOCATION, false);
@@ -65,6 +70,14 @@ public class SettingActivity extends BaseActivity {
                 siv_location.setCheck(!isCheck);
                 /*将取反后的状态存储到相应的sp中*/
                 SpUtil.putBoolean(getApplicationContext(), ConstantValue.OPEN_LOCATION, !isCheck);
+
+                if (!isCheck) {
+                    /*开启服务*/
+                    startService(new Intent(getApplicationContext(), AddressService.class));
+                }else {
+                    /*关闭服务*/
+                    stopService(new Intent(getApplicationContext(), AddressService.class));
+                }
             }
         });
     }
