@@ -19,7 +19,6 @@ import butterknife.InjectView;
  */
 public class SetupOverActivity extends BaseActivity {
     private static final String TAG = "SetupOverActivity";
-
     TextView mPhoneNumber;
 
     @Override
@@ -35,7 +34,7 @@ public class SetupOverActivity extends BaseActivity {
             startActivity(intent);
             finish();
         }
-
+        /**跟新试图*/
         initUi();
 
     }
@@ -50,7 +49,5 @@ public class SetupOverActivity extends BaseActivity {
 
     public void toSetup1(View view) {
         startActivity(new Intent(this, SetUp1Activity.class));
-
-
     }
 }

@@ -44,7 +44,6 @@ public class SetUp2Activity extends BaseSetupActivity {
         } else {
             ToastUrl.show(this, "请绑定SIM卡");
         }
-
         overridePendingTransition(R.anim.next_in_anim, R.anim.next_out_anim);
     }
 
@@ -59,13 +58,12 @@ public class SetUp2Activity extends BaseSetupActivity {
         /*回显，读取已有的绑定状态，*/
         String open_bound_sim = SpUtil.getString(this, ConstantValue.OPEN_BOUND_SIM, "");
         Log.i(TAG, "open_bound_sim: " + open_bound_sim);
-        if (TextUtils.isEmpty(open_bound_sim)) {
+        if (!TextUtils.isEmpty(open_bound_sim)) {
             mSimBound.setCheck(false);
         } else {
             mSimBound.setCheck(true);
         }
     }
-
 
     @OnClick(R.id.siv_sim_bound)
     public void onClick() {
@@ -75,14 +73,12 @@ public class SetUp2Activity extends BaseSetupActivity {
         mSimBound.setCheck(!isCheck);
         /*绑定序列号*/
         if (!isCheck) {
-            Log.i(TAG, "===============1=============");
             /*存储序列卡号*/
             TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
             String number = manager.getSimSerialNumber();
             SpUtil.putString(this, ConstantValue.OPEN_BOUND_SIM, number);
 
         } else {
-            Log.i(TAG, "===============2=============");
             /*将存储的序列卡号的节点 从sp中删除*/
             SpUtil.remove(getApplicationContext(), ConstantValue.OPEN_BOUND_SIM);
         }

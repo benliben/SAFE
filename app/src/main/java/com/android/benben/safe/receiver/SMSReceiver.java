@@ -21,12 +21,13 @@ import com.android.benben.safe.utils.ToastUrl;
  */
 public class SMSReceiver extends BroadcastReceiver {
 
+    private Context mContext;
     private DevicePolicyManager mDPM;
     private ComponentName mDeviceAdminSample;
     @Override
     public void onReceive(Context context, Intent intent) {
-//        mDeviceAdminSample = new ComponentName(this, DeviceAdmin.class);
-//        mDPM = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+        mDeviceAdminSample = new ComponentName(mContext, DeviceAdmin.class);
+        mDPM = (DevicePolicyManager) mContext.getSystemService(Context.DEVICE_POLICY_SERVICE);
 
         /*判断是否开启了防盗保护*/
         boolean open_secuity = SpUtil.getBoolean(context, ConstantValue.OPEN_SECURITY, false);

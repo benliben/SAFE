@@ -9,6 +9,7 @@ import com.android.benben.safe.R;
 
 /**
  * Created by Administrator on 2016/8/7.
+ * 设置导航页面第一页
  */
 public class SetUp1Activity extends BaseSetupActivity {
     @Override
@@ -16,7 +17,6 @@ public class SetUp1Activity extends BaseSetupActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_setup_1);
     }
-
     @Override
     public void showNextPage() {
         Intent intent = new Intent(this, SetUp2Activity.class);
@@ -25,10 +25,8 @@ public class SetUp1Activity extends BaseSetupActivity {
         /*开启平移动画*/
         overridePendingTransition(R.anim.next_in_anim,R.anim.next_out_anim);
     }
-
     @Override
     public void showPrePage() {
-
     }
 
 

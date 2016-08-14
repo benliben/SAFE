@@ -36,6 +36,12 @@ public class SetUp3Activity extends BaseSetupActivity {
         ButterKnife.inject(this);
         initUI();
     }
+    private void initUI() {
+        String number = SpUtil.getString(this, ConstantValue.PHONE_NUMBER, "");
+        if (!TextUtils.isEmpty(number)) {
+            mPhoneNumber.setText(number);
+        }
+    }
 
     @Override
     public void showNextPage() {
@@ -56,18 +62,11 @@ public class SetUp3Activity extends BaseSetupActivity {
     public void showPrePage() {
         startActivity(new Intent(this, SetUp2Activity.class));
         finish();
-
         overridePendingTransition(R.anim.pre_in_anim, R.anim.pre_out_anim);
 
     }
 
-    private void initUI() {
-        String number = SpUtil.getString(this, ConstantValue.PHONE_NUMBER, "");
-        if (!TextUtils.isEmpty(number)) {
-            mPhoneNumber.setText(number);
-        }
 
-    }
 
 
     @OnClick(R.id.bt_phone)
@@ -79,16 +78,16 @@ public class SetUp3Activity extends BaseSetupActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        /*先做非空判断，防止系统蹦掉*/
         if (data != null) {
             /*1.返回到当前界面的时候，接收结果的方法*/
             String phone = data.getStringExtra("phone");
             /*2.将特殊字符过滤掉(中划线转换成空字符串)*/
             phone = phone.replace("-", "").replace(" ", "").trim();
+            /*3.将获取到的电话号码显示在输入框中*/
             mPhoneNumber.setText(phone);
-
-            /*3.存储联系人到sp中*/
+            /*4.存储联系人到sp中*/
             SpUtil.putString(this, ConstantValue.PHONE_NUMBER, phone);
-
         }
 
         super.onActivityResult(requestCode, resultCode, data);

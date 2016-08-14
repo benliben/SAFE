@@ -48,6 +48,7 @@ public class SetUp4Activity extends BaseSetupActivity {
         overridePendingTransition(R.anim.pre_in_anim, R.anim.pre_out_anim);
     }
 
+    /*初始化界面*/
     private void initUI() {
         cb_box = (CheckBox) findViewById(R.id.setup4_cb_box);
         /*1.是否选中状态的回显*/
@@ -60,12 +61,12 @@ public class SetUp4Activity extends BaseSetupActivity {
             cb_box.setText("安全设置已经关闭");
             cb_box.setChecked(open_security);
         }
+
         /*3.点击过程中，监听选中状态的发生改变的过程，*/
         cb_box.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                    /*4.切换后的状态的存储*/
+                /*4.切换后的状态的存储*/
                 SpUtil.putBoolean(getApplicationContext(), ConstantValue.OPEN_SECURITY, isChecked);
                 /*根据开启或关闭状态，去修改显示额文字*/
                 if (isChecked) {

@@ -15,14 +15,12 @@ import android.util.Log;
 import android.view.View;
 
 import com.android.benben.safe.R;
-import com.android.benben.safe.model.PhoneNumberModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 
 /**
  * Created by LiYuanxiong on 2016/8/8 17:19.
@@ -36,9 +34,9 @@ public class ContactListActivity extends BaseActivity {
     private ContentListAdapter mAdapter;
 
     private HashMap<String, String> hashMap;
-    private ArrayList<HashMap<String, String>> mList=new ArrayList<HashMap<String, String>>();
+    private ArrayList<HashMap<String, String>> mList = new ArrayList<HashMap<String, String>>();
 
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -51,28 +49,32 @@ public class ContactListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a_contact_list);
         ButterKnife.inject(this);
+        /*初始化数据*/
         initData();
+        /*初始化View*/
+        initView();
 
+    }
+
+    private void initView() {
         mContent.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new ContentListAdapter(this, mList);
-
+        mAdapter = new ContentListAdapter(mList, this);
+        /*item的点击事件*/
         mAdapter.setOnItemClickListener(new ContentListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 /*1.获取点中条目的索引指向索引集合的对象*/
                 if (mAdapter != null) {
+                    /*2.获取mList里面的第position个数据*/
                     HashMap<String, String> hashMap = mList.get(position);
+                    /*3.获取第position个数据里面的电话号码*/
                     String phone = hashMap.get("phone");
-                    Log.i(TAG, "phone: "+phone);
-                    /*3.此电话号码需要给第三个导航界面使用*/
+                    /*4.此电话号码需要给第三个导航界面使用*/
                     Intent intent = new Intent();
                     intent.putExtra("phone", phone);
                     setResult(0, intent);
                     finish();
                 }
-
-
-
             }
 
             @Override
@@ -87,7 +89,7 @@ public class ContactListActivity extends BaseActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                    /*1.获取内容解析器对象*/
+                /*1.获取内容解析器对象*/
                 ContentResolver contentResolver = getContentResolver();
 
                 /*2.做查询系统联系人数据库的过程*/
@@ -95,6 +97,7 @@ public class ContactListActivity extends BaseActivity {
                         Uri.parse("content://com.android.contacts/raw_contacts"),
                         new String[]{"contact_id"}, null, null, null);
                 mList.clear();
+
                 /*3.循环游标，直到没有为止*/
                 while (cursor.moveToNext()) {
                     String id = cursor.getString(0);
@@ -113,27 +116,20 @@ public class ContactListActivity extends BaseActivity {
                         /*6.区分数据类型*/
                         if (type.equals("vnd.android.cursor.item/phone_v2")) {
                             if (!TextUtils.isEmpty(data)) {
-                                    hashMap.put("phone", data);
+                                hashMap.put("phone", data);
                             }
                         } else if (type.equals("vnd.android.cursor.item/name")) {
                             if (!TextUtils.isEmpty(data)) {
                                 hashMap.put("name", data);
                             }
                         }
-
-
                     }
                     indexCursor.close();
                     mList.add(hashMap);
-                    Log.i(TAG, "run: "+mList);
-
-
                 }
                 cursor.close();
                 /*消息机制 发送一个空的消息，告知主线程可以使用子线程已经填充好的数据集合*/
                 handler.sendEmptyMessage(0);
-
-
             }
         }).start();
 
