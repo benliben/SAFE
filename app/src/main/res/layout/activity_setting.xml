@@ -24,8 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         mobilesafe:destitle="电话归属地显示设置"
-        mobilesafe:desoff="归属地显示已经开起"
-        mobilesafe:deson="归属地显示已经关闭"
+        mobilesafe:desoff="归属地显示已经关闭"
+        mobilesafe:deson="归属地显示已经开启"
         />
 
 

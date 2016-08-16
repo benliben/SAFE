@@ -106,7 +106,7 @@ public class QueryAddressActivity extends BaseActivity {
             /*震动毫秒值*/
             vibrator.vibrate(2000);
             /*规律的震动(震动的规则，次数*/
-            vibrator.vibrate(new long[]{2000, 5000, 2000, 5000}, 2);
+            vibrator.vibrate(new long[]{1000, 1000, 1000, 1000}, 2);
 
         }
 

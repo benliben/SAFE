@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.android.benben.safe.R;
 import com.android.benben.safe.service.AddressService;
+import com.android.benben.safe.utils.ServiceUtils;
 import com.android.benben.safe.utils.SpUtil;
 import com.android.benben.safe.view.SettingItemView;
 
@@ -58,9 +59,10 @@ public class SettingActivity extends BaseActivity {
      */
     private void initLocation() {
         final SettingItemView siv_location = (SettingItemView) findViewById(R.id.siv_location);
-        boolean open_location = SpUtil.getBoolean(this, ConstantValue.OPEN_LOCATION, false);
+//        boolean open_location = SpUtil.getBoolean(this, ConstantValue.OPEN_LOCATION, false);
+        boolean running = ServiceUtils.isRunning(this, "com.android.benben.safe.service.AddressService");
         /*是否被选择*/
-        siv_location.setCheck(open_location);
+        siv_location.setCheck(running);
         siv_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
