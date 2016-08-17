@@ -11,6 +11,7 @@ import com.android.benben.safe.R;
 import com.android.benben.safe.service.AddressService;
 import com.android.benben.safe.utils.ServiceUtils;
 import com.android.benben.safe.utils.SpUtil;
+import com.android.benben.safe.view.SettingClickView;
 import com.android.benben.safe.view.SettingItemView;
 
 /**
@@ -20,6 +21,8 @@ import com.android.benben.safe.view.SettingItemView;
 public class SettingActivity extends BaseActivity {
 
     private static final String TAG = "lyx";
+    private static final String NAMESPACE = "com.android.benben.safe.service.AddressService";
+    private String[] mToastStyleDes;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,6 +30,20 @@ public class SettingActivity extends BaseActivity {
         setContentView(R.layout.activity_setting);
         initUpdate();
         initLocation();
+        initToastStyle();
+    }
+
+    private void initToastStyle() {
+         SettingClickView scv_toast_style = (SettingClickView) findViewById(R.id.scv_toast_style);
+        scv_toast_style.setTitle("设置归属地显示风格");
+        /*创建描述文字所在的string数组*/
+         mToastStyleDes = new String[]{"透明", "橙色", "蓝色", "灰色", "绿色"};
+
+        /*通过sp获取吐司显示样式的索引值，用于获取描述文字*/
+        int toast_styke = SpUtil.getInt(this, ConstantValue.TOAST_STYLE, 0);
+        /*获取字符串数组当中的文字显示到控件描述上*/
+        scv_toast_style.setDes(mToastStyleDes[toast_styke]);
+
     }
 
 
@@ -60,7 +77,7 @@ public class SettingActivity extends BaseActivity {
     private void initLocation() {
         final SettingItemView siv_location = (SettingItemView) findViewById(R.id.siv_location);
 //        boolean open_location = SpUtil.getBoolean(this, ConstantValue.OPEN_LOCATION, false);
-        boolean running = ServiceUtils.isRunning(this, "com.android.benben.safe.service.AddressService");
+        boolean running = ServiceUtils.isRunning(this, NAMESPACE);
         /*是否被选择*/
         siv_location.setCheck(running);
         siv_location.setOnClickListener(new View.OnClickListener() {

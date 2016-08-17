@@ -73,6 +73,34 @@ public class SpUtil {
     }
 
     /**
+     * 写
+     * @param context 上下文
+     * @param key 存储节点的名称
+     * @param value 存储节点的boolean
+     */
+    public static void putInt(Context context, String key, int value) {
+
+        if (sp ==null) {
+            sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+        }
+        sp.edit().putInt(key, value).commit();
+    }
+
+    /**
+     *读
+     * @param context 上下文环境
+     * @param key 储存节点名称
+     * @param defValue 没有此节点的默认值
+     * @return  默认值或者此节点读取到的结果
+     */
+    public static int getInt(Context context, String key, int defValue) {
+        if (sp == null) {
+            sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+        }
+        return sp.getInt(key, defValue);
+    }
+
+    /**
      *从sp中移除指定节点
      * @param context 上下文
      * @param key 需要移节点的名称

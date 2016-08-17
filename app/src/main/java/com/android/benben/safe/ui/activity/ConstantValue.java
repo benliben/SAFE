@@ -35,4 +35,8 @@ public class ConstantValue {
      * 接收警告短信的电话号码key
      */
     public static final String PHONE_NUMBER = "phone_number";
+    /**
+     * 吐司选择样式索引的key
+     */
+    public static final String TOAST_STYLE = "toast_style";
 }

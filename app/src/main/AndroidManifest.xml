@@ -23,6 +23,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <!--监听电话的权限-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--在系统的窗体上弹出一个对话框-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
 
     <application

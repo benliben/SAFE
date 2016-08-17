@@ -7,26 +7,49 @@
     <!--将以下的相对布局 抽取到单独的一个类中去管理，以后只需要在布局文件中添加此类 即可达到以下效果-->
 
     <TextView style="@style/TitleStyle" />
-
-    <com.android.benben.safe.view.SettingItemView
-        xmlns:mobilesafe="http://schemas.android.com/apk/res/com.android.benben.safe"
-        android:id="@+id/siv_update"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        mobilesafe:destitle="自动更新设置"
-        mobilesafe:desoff="自动跟新已经关闭"
-        mobilesafe:deson="自动更新已经开启"
-        />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.android.benben.safe.view.SettingItemView
+                xmlns:mobilesafe="http://schemas.android.com/apk/res/com.android.benben.safe"
+                android:id="@+id/siv_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                mobilesafe:destitle="自动更新设置"
+                mobilesafe:desoff="自动跟新已经关闭"
+                mobilesafe:deson="自动更新已经开启"
+                />
 
-    <com.android.benben.safe.view.SettingItemView
-        xmlns:mobilesafe="http://schemas.android.com/apk/res/com.android.benben.safe"
-        android:id="@+id/siv_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        mobilesafe:destitle="电话归属地显示设置"
-        mobilesafe:desoff="归属地显示已经关闭"
-        mobilesafe:deson="归属地显示已经开启"
-        />
+            <com.android.benben.safe.view.SettingItemView
+                xmlns:mobilesafe="http://schemas.android.com/apk/res/com.android.benben.safe"
+                android:id="@+id/siv_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                mobilesafe:destitle="电话归属地显示设置"
+                mobilesafe:desoff="归属地显示已经关闭"
+                mobilesafe:deson="归属地显示已经开启"
+                />
+            <com.android.benben.safe.view.SettingClickView
+                android:id="@+id/scv_toast_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                />
+            <com.android.benben.safe.view.SettingClickView
+                android:id="@+id/scv_toast_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                />
+        </LinearLayout>
+
+    </ScrollView>
+
+
 
 
 
